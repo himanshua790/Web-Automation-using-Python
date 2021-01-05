@@ -1,0 +1,83 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import pyautogui, time ,random, email ,imapclient ,pyzmail, re 
+
+
+url_of choice='** **'
+chromedriver = r"** path of Selenium webdriver **"
+browser = webdriver.Chrome(chromedriver)
+browser.get(url_of_choice)
+messages = ['savi','piyush','monu','bittu','rajesh','suresh','yash','sonu']
+        
+            
+for i in range(1,1001):
+    try:
+        elem_name = browser.find_element_by_css_selector('#ap_customer_name')
+        elem_name.click
+        elem_name.send_keys(messages[random.randint(0, len(messages) - 1 )])
+    except KeyError:
+        print('customer ')
+
+    try:                
+        elem_email = browser.find_element_by_css_selector('#ap_email')
+        elem_email.click
+        elem_email.send_keys('internetgeeks100+'+str(i)+'@gmail.com')
+    except KeyError:
+        print('email')
+
+    try:                
+        elem_pass = browser.find_element_by_css_selector('#ap_password')
+        elem_pass.click
+        elem_pass.send_keys('123456789')
+    except KeyError:
+        print('password')
+
+    try:
+        elem_pcheck = browser.find_element_by_css_selector('#ap_password_check')
+        elem_pcheck.click
+        elem_pcheck.send_keys('123456789')
+    except KeyError:
+        print('passwordcheck')
+    
+
+    try:
+        elem_submit = browser.find_element_by_css_selector('#continue')
+        elem_submit.click
+        elem_submit.send_keys(Keys.ENTER)
+    except KeyError:
+        print('continue')
+
+
+    time.sleep(60)
+    imapObj = imapclient.IMAPClient('imap.gmail.com', ssl=True)
+    imapObj.login('*************@gmail.com ', ' **password** ')
+    imapObj.select_folder('INBOX', readonly=True)
+    UIDs = imapObj.search(['ALL'])
+                      
+    
+
+    rawMessages = imapObj.fetch([120+i], [b'BODY[]', 'FLAGS'])
+    storekey = rawMessages[120+i]
+    EmailBody=storekey[b'BODY[]'].decode('utf-8')
+
+    otpCode = re.search('<p class=3D"otp">(.+?)</p>',EmailBody).group(1)
+    print(otpCode)
+    
+    time.sleep(20)
+
+#update elements acc to use.
+    try: 
+        elem_otp = browser.find_element_by_css_selector('#cvf-page-content > div > div > div:nth-child(1) > form > div:nth-child(2) > input')        
+        elem_otp.click
+        elem_otp.send_keys(likk)
+    except KeyError:
+        print('otp body')
+
+    try:
+        elem_verify = browser.find_element_by_css_selector('#a-autoid-0 > span > input')
+        elem_verify.click
+        elem_verify.send_keys(Keys.ENTER)
+    except KeyError:
+        print('verify')
+    time.sleep(10)
+    
